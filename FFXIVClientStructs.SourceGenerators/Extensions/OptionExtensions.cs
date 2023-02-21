@@ -12,6 +12,6 @@ internal static class OptionExtensions
     {
         return attribute
             .Bind(attributeData => attributeData.GetAttributeArgument<T>(argumentName, argumentIndex))
-            .ToValidation(DiagnosticInfo.Create(AttributeArgumentInvalid, location, attributeName, argumentName));
+            .ToValidation(DiagnosticInfo.Create(AttributeArgumentInvalid, location, argumentName, attributeName));
     }
 }
