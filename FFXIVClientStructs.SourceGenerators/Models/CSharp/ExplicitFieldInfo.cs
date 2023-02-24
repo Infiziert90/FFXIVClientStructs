@@ -4,11 +4,11 @@ using Microsoft.CodeAnalysis;
 
 namespace FFXIVClientStructs.SourceGenerators.Models.CSharp;
 
-internal sealed record FieldInfo(string Name, string TypeName, int Offset)
+internal sealed record ExplicitFieldInfo(string Name, string TypeName, int Offset)
 {
     private const string FieldOffsetAttributeName = "System.Runtime.InteropServices.FieldOffsetAttribute";
 
-    public static Validation<DiagnosticInfo, FieldInfo> FromRoslyn(IFieldSymbol fieldSymbol)
+    public static Validation<DiagnosticInfo, ExplicitFieldInfo> FromRoslyn(IFieldSymbol fieldSymbol)
     {
         Validation<DiagnosticInfo, int> validOffset = 
             fieldSymbol
@@ -16,7 +16,7 @@ internal sealed record FieldInfo(string Name, string TypeName, int Offset)
                 .GetValidAttributeArgument<int>("Value", 0, FieldOffsetAttributeName, fieldSymbol);
 
         return validOffset.Map(offset =>
-            new FieldInfo(
+            new ExplicitFieldInfo(
                 fieldSymbol.Name,
                 fieldSymbol.Type.GetFullyQualifiedNameWithGenerics(),
                 offset

@@ -12,7 +12,7 @@ internal static class AttributeDataExtensions
     {
         // [Attribute("??")]
         // [Attribute(name: "??")]
-        if (attributeData.ConstructorArguments.Any())
+        if (attributeData.ConstructorArguments.Any() && argumentIndex >= 0)
         {
             if (argumentIndex > attributeData.ConstructorArguments.Length)
                 return None;

@@ -7,14 +7,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace FFXIVClientStructs.SourceGenerators.Models;
 
-internal sealed record MethodsInfo(
+internal sealed record GenerationMethodInfo(
     Seq<MemberFunctionInfo> MemberFunctions,
     Seq<VirtualFunctionInfo> VirtualFunctions,
     Seq<StaticAddressInfo> StaticAddresses,
     Seq<MethodInfo> RemainingMethods,
     Seq<CStrOverloadInfo> CStrOverloads)
 {
-    public static Validation<DiagnosticInfo, MethodsInfo> FromRoslyn(
+    public static Validation<DiagnosticInfo, GenerationMethodInfo> FromRoslyn(
         StructDeclarationSyntax structSyntax, SemanticModel model, CancellationToken token)
     {
         // look for methods that require generation
@@ -62,7 +62,7 @@ internal sealed record MethodsInfo(
                 staticAddresses.Sequence(), remainingMethods.Sequence(), cStrOverloads.Sequence())
             .Apply(static (memberFunctionInfos, virtualFunctionInfos, staticAddressInfos, remainingMethodInfos,
                     cStrOverloadInfos) =>
-                new MethodsInfo(
+                new GenerationMethodInfo(
                     memberFunctionInfos,
                     virtualFunctionInfos,
                     staticAddressInfos,
